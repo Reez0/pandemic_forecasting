@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 from termcolor import colored
 
 
-def model() -> Tuple[pd.DataFrame, pd.DataFrame]:
-    dates, cases = retrieve_data()
+def arima_model() -> Tuple[pd.DataFrame, pd.DataFrame]:
+    dates, cases = retrieve_covid_data()
     data = {'Date': dates, 'Cases': cases}
     df = pd.DataFrame(data)
     df["Date"] = pd.to_datetime(df['Date'])
@@ -36,8 +36,8 @@ def model() -> Tuple[pd.DataFrame, pd.DataFrame]:
     return df, forecast_df
 
 
-def report():
-    original_dataframe, forecast = model()
+def generate_report() -> None:
+    original_dataframe, forecast = arima_model()
     try:
         forecast.to_csv('results.csv')
         print(colored("CSV file generated successfully!", 'green'))
@@ -58,7 +58,7 @@ def report():
         raise
 
 
-def retrieve_data() -> Tuple[List[str], List[str]]:
+def retrieve_covid_data() -> Tuple[List[str], List[str]]:
     response = requests.get(
         "https://www.worldometers.info/coronavirus/country/south-africa/")
     soup = BeautifulSoup(response.content, features="html.parser")
@@ -89,6 +89,6 @@ def retrieve_data() -> Tuple[List[str], List[str]]:
 
 if __name__ == '__main__':
     try:
-        report()
+        generate_report()
     except Exception as e:
         print(f"Something went wrong. {e}")
