@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid Stuff/title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>COVID-19 Cases Chart</h1>
+
+    <!-- Create a canvas element to render the chart -->
+    <canvas id="myChart" width="1000" height="500"></canvas>
+
+    <script>
+        async function fetchData() {
+    try {
+        const response = await fetch('/forecast/retrieve-forecast');
+        const data = await response.json();
+        const dates = Object.keys(data.data);
+        const cases = Object.values(data.data);
+        const dateObjects = dates.map(date => new Date(date).toDateString());
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dateObjects,
+                datasets: [{
+                    label: 'COVID-19 Cases',
+                    data: cases,
+                    borderColor: 'blue',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
