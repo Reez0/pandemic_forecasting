@@ -1,10 +1,21 @@
 # Pandemic Forecasting Project
 
-This is a simple Django project created for [briefly describe the purpose or context of the project].
+This is a simple project created to predict COVID 19 cases in South Africa and achieves the following:
 
+1. Gets the HTML source from worldometers. ✅
+2. Parses the source to get the daily cases in recent past. ✅ 
+3. Uses an ARIMA machine learning method to make a forecast. ✅
+4. Model runs in real time. ✅
+5. Writes results to .csv file. ✅
+6. Adds forecast to .png file. ✅
+7. Can run as a standalone script or as part of a greater project. ✅
+8. Forecasting results accessible via an API endpoint. ✅
+9. Forecasting results available in a frontend. ✅
 ## Getting Started
 
-These instructions will help you set up and run the project on your local machine for development and testing purposes. 
+These instructions will help you set up and run the project on your local machine for development and testing purposes. It can also be run as a standalone script by running the crawler.py file found in forecast/crawler.py. 
+
+`python3 crawler.py` will generate a png plot and a csv file.
 
 ### Prerequisites
 
