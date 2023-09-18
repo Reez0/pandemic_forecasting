@@ -1,0 +1,4 @@
+Some useful information to include would be population density as well as age distribution 
+since this could help to account for variations in virus spread. Vaccination rates might 
+also be useful in indicating immunity by region. These types of data may provide a more
+comprehensivve and accurate forecasting model.
