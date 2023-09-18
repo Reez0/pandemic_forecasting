@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
+from termcolor import colored
 
 
 def model() -> Tuple[pd.DataFrame, pd.DataFrame]:
@@ -37,18 +38,24 @@ def model() -> Tuple[pd.DataFrame, pd.DataFrame]:
 
 def report():
     original_dataframe, forecast = model()
-
-    forecast.to_csv('results.csv')
-
-    # Plot the actual and predicted values
-    plt.plot(original_dataframe.index,
-             original_dataframe['Cases'], label='Actual')
-    plt.plot(pd.date_range(
-        start=original_dataframe.index[-1], periods=7), forecast, label='Forecast', linestyle='--')
-    plt.legend()
-    plt.xlabel('Date')
-    plt.ylabel('Cases')
-    plt.savefig('plot.png')
+    try:
+        forecast.to_csv('results.csv')
+        print(colored("CSV file generated successfully!", 'green'))
+    except Exception:
+        raise
+    try:
+        # Plot the actual and predicted values
+        plt.plot(original_dataframe.index,
+                 original_dataframe['Cases'], label='Actual')
+        plt.plot(pd.date_range(
+            start=original_dataframe.index[-1], periods=7), forecast, label='Forecast', linestyle='--')
+        plt.legend()
+        plt.xlabel('Date')
+        plt.ylabel('Cases')
+        plt.savefig('plot.png')
+        print(colored("Plot generated successfully!", 'green'))
+    except Exception:
+        raise
 
 
 def retrieve_data() -> Tuple[List[str], List[str]]:
@@ -81,4 +88,7 @@ def retrieve_data() -> Tuple[List[str], List[str]]:
 
 
 if __name__ == '__main__':
-    report()
+    try:
+        report()
+    except Exception as e:
+        print(f"Something went wrong. {e}")
